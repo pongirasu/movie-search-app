@@ -1,0 +1,34 @@
+# JetBrains IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Build artifacts
+target/
+build/
+*.jar
+*.war
+*.zip
+*.tar.gz
+
+# Local DB
+*.mv.db
+*.trace.db
+
+# Log files
+*.log
+logs/
+
+# Environment variables (例: ローカル開発用の設定ファイル)
+.env
+/src/main/resources/application-local.properties
+/src/main/resources/application-dev.properties
+
+# === ここから追加 ===
+# Original files (プロジェクト内の全ての*Originalファイルを除外)
+*Original.java
+*original.html
+*original.js
+*original.css

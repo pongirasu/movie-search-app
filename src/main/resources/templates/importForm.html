@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>映画データ インポート</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/importForm.css}">
+</head>
+<body>
+    <h1>映画データ インポート</h1>
+
+    <div th:if="${successMessage}" class="successMessage">
+        <p th:text="${successMessage}"></p>
+    </div>
+    
+    <div th:if="${errorMessage}" class="errorMessage">
+		<p th:text="${errorMessage}"></p>
+	</div>
+	
+    <form method="post" enctype="multipart/form-data" th:action="@{/movies/import/upload}">
+		<div class="form-item">
+			<input type="file" name="file" accept="application/json" />
+        	<button type="submit">インポート開始</button>
+        	<button type="button" th:onclick="|location.href='@{/movies/search}'|">トップに戻る</button>
+		</div>
+    </form>
+    
+    <div th:if="${importResult}">
+		<h2>インポート結果詳細</h2>
+		<p>インポート成功件数：<span th:text="${importResult.importedCount}"></span>件</p>
+		<p>スキップされた件数：<span th:text="${importResult.skippedCount}"></span>件</p>
+		
+		<div th:if="${!importResult.skippedMovies.empty}">
+			<h3>スキップされた映画のリスト</h3>
+			<ul class="skipped-movies-list">
+				<li th:each="skippedMovie : ${importResult.skippedMovies}">
+					<strong th:text="${skippedMovie.title}"></strong> (Disc No: <span th:text="${skippedMovie.discNo}"></span>)<br>
+					<span class="skipped-errors">エラー：
+						<span th:each="error, iterStat : ${skippedMovie.errors}">
+							<span th:text="${error}"></span><span th:if="${!iterStat.last}">; </span>
+						</span>
+					</span>
+				</li>
+			</ul>
+		</div>
+		<div th:if="${importResult.skippedMovies.empty && importResult.importedCount > 0}">
+			<p>スキップされた映画はありません。</p>
+		</div>
+	</div>
+	
+</body>
+</html>

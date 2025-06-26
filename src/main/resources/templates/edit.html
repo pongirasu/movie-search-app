@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<title>映画編集</title>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/edit.css}">
+</head>
+
+<body>
+	<h1>映画編集</h1>
+	<div th:if="${successMessage}" class="success-message">
+		<p th:text="${successMessage}"></p>
+	</div>
+	<div th:if="${errorMessage}" class="error-message">
+		<p th:text="${errorMessage}"></p>
+	</div>
+	
+	<form id="editForm" th:action="@{/movies/update/{movieId}(movieId=${movie.movieId})}" th:object="${movie}" method="post">
+		<input type="hidden" th:field="*{movieId}">
+		<input type="hidden" id="initial-actors" th:value="${movie.actors}">
+		<input type="hidden" th:field="*{actors}" id="actualActorsInput">
+		
+		<div class="form-item">
+			<label for="no" class="form-label">No</label>
+			<input type="text" id="no" th:field="*{discNo}" class="form-input">
+				<div th:if="${#fields.hasErrors('discNo')}" class="error-message">
+					<p th:errors="*{discNo}"></p>
+				</div>
+		</div>
+		
+		<div class="form-item">
+			<label for="year" class="form-label">公開年</label>
+			<input type="text" id="year" th:field="*{year}" class="form-input">
+			<div th:if="${#fields.hasErrors('year')}" class="error-message">
+				<p th:errors="*{year}"></p>
+			</div>
+		</div>
+		
+		<div class="form-item">
+			<label for="title" class="form-label">映画タイトル（邦題）</label>
+			<input type="text" id="title" th:field="*{title}" class="form-input">
+			<div th:if="${#fields.hasErrors('title')}" class="error-message">
+				<p th:errors="*{title}"></p>
+			</div>
+		</div>
+		
+		<div class="form-item">
+			<label for="originalTitle" class="form-label">映画タイトル（原題）</label>
+			<input type="text" id="originalTitle" th:field="*{originalTitle}" class="form-input">
+			<div th:if="${#fields.hasErrors('originalTitle')}" class="error-message">
+				<p th:errors="*{originalTitle}"></p>
+			</div>
+		</div>
+
+		<div class="form-item">
+			<label class="form-label">出演者</label>
+			<div id="actors-container"></div>
+			<button type="button" id="add-actor-button">出演者を追加</button>
+		</div>
+
+		<button type="submit">更新</button>
+		<button type="button" th:onclick="|location.href='@{/movies/search}'|">トップに戻る</button>
+	</form>
+
+	<script th:src="@{/js/editform.js}"></script>
+
+</body>
+</html>
+
+<!-- このHTMLの解説
+	<form th:action="@{/movies/edit/{movieId}(movieId=${movie.movieId})}" th:object="${movie}" method="post">:
+	映画情報を編集するためのフォームを定義。
+		
+		th:action="@{/movies/edit/{movieId}(movieId=${movie.movieId})}": 
+		フォームの送信先 URL を /movies/edit/{movieId} に設定。
+		
+		@{/movies/edit/{movieId}(movieId=${movie.movieId})} 
+		Thymeleaf の URL 式で、編集する映画の movieId をパス変数として URL に埋め込む。
+		
+		${movie.movieId} :
+		コントローラーから渡された movie オブジェクトの movieId フィールドの値を参照する。
+		
+		th:object="${movie}":
+		フォームのバインディング対象となるオブジェクトとして、コントローラーから渡された movie オブジェクトを指定する。
+		これにより、フォームの各入力フィールドと movie オブジェクトのフィールドが関連付けられる。
+		
+		method="post": 
+		HTTP の POST メソッドを使用してフォームデータを送信することを指定。
+		POST メソッドは、データの更新などの副作用のある操作に適している。
+		
+		<input type="hidden" th:field="*{movieId}">: 
+		隠し入力フィールド。
+		
+		th:field="*{movieId}": 
+		movie オブジェクトの movieId フィールドにバインドされる。これにより、フォーム送信時に映画の ID がサーバーに送信される。
+		type="hidden" なので、画面には表示されない。
+		
+		<div><label for="title">映画タイトル</label><input type="text" id="title" th:field="*{title}"></div>:
+		 映画タイトルを編集するための入力フィールド。
+		 
+		 <label for="title">映画タイトル</label>:
+		 「映画タイトル」というラベルを表示し、for="title" 属性で次の入力フィールドと関連付ける。
+		 
+		 <input type="text" id="title" th:field="*{title}">: 
+		 テキスト入力フィールド。
+		 
+		 id="title": ラベルと関連付けるための ID 属性
+		 
+		 th:field="*{title}": 
+		 movie オブジェクトの title フィールドにバインドされ、コントローラーから渡された現在のタイトルが初期値として表示され、
+		 ユーザーが変更した値が movie.title にセットされて送信される。
+		 
+		 <div><label>出演者</label><div id="actors-container">
+			 <div th:each="actor, iterStat : ${movie.actors}">
+				 <input type="text" th:name="${'actors[' + iterStat.index + '].actorName'}" th:value="${actor.actorName}">
+			 </div>
+		 </div>
+		 <button type="button" id="add-actor-button">出演者を追加</button></div>: 
+		 出演者を編集・追加するための領域。
+		 
+		 <label>出演者</label>: 「出演者」というラベルを表示。
+		 
+		 <div id="actors-container">: 出演者の入力フィールドを動的に追加するためのコンテナとなる div 要素。
+			 id="actors-container" は JavaScript からこの要素を操作するために使用される。
+		
+		 <div th:each="actor, iterStat : ${movie.actors}">:
+		Thymeleaf の each 属性で、コントローラーから渡された movie オブジェクトの actors リストの各要素 (actor) に対して、
+		内部の div 要素を繰り返しレンダリングする。
+		iterStat はループの状態（インデックスなど）を提供するオブジェクト。
+		
+		<input type="text" th:name="${'actors[' + iterStat.index + '].actorName'}" th:value="${actor.actorName}">: 
+		出演者の名前を入力するためのテキスト入力フィールド。
+		
+		th:name="${'actors[' + iterStat.index + '].actorName'}":
+		入力フィールドの name 属性を actors[0].actorName, actors[1].actorName のように、配列形式で生成する。
+		これにより、サーバー側で List<Actor> としてバインドできるようになる。
+		${iterStat.index} は現在のループのインデックスを表す。
+		
+		th:value="${actor.actorName}":
+		入力フィールドの初期値を、現在の actor オブジェクトの actorName フィールドの値に設定する。
+		
+		<button type="button" id="add-actor-button">出演者を追加</button>: 
+		新しい出演者を追加するためのボタン。type="button" なので、このボタンを押してもフォームは送信されない。
+		id="add-actor-button" は JavaScript からこのボタンを操作するために使用される。
+		
+		<button type="submit">更新</button>: フォームを送信し、映画情報を更新するためのボタン。
+		
+		<button type="button" th:onclick="|location.href='@{/movies/search}'|">トップに戻る</button>: 
+		映画検索画面に戻るためのボタン。
+		th:onclick 属性で、ボタンがクリックされたときに JavaScript の location.href を使用して /movies/search の URL に遷移する。
+		
+		<script th:src="@{/js/edit.js}"></script>:
+		static/js/edit.js ファイルを読み込むための <script> タグ。
+		この JavaScript ファイルには、出演者入力フィールドを動的に追加する処理などが記述されている。
+-->

@@ -1,0 +1,46 @@
+@charset "UTF-8";
+/* すべての共通スタイル */
+
+button {
+	background-color: lightgray; /*ボタンの背景色*/
+	color: black; /* ボタンの文字色 */
+	margin-top: 10px; /* ボタンの上部マージン */
+	margin-right: 40px; /* ボタンの右側マージン */
+	padding: 10px 20px; /* 共通の余白で大きさを揃える */
+	font-size: 16px; /* 共通の文字サイズ */
+	font-weight: normal; /* 文字サイズを統一する */
+	border: 1px solid #ccc; /* 共通の枠線 */
+	border-radius: 5px; /*共通の角の丸み*/
+	cursor: pointer; /* 共通のマウスオーバー時のカーソル */
+}
+
+/* ホバー時のスタイル */
+button:hover {
+	opacity: 0.8; /* ホバー時に少し透明にするなどの効果 */
+}
+
+/* 映画タイトルと出演者の文字列とテキストボックスの設定 */
+
+.form-item {
+	display: flex;
+	flex-direction: column;
+	align-items: baseline;
+	margin-bottom: 0.5em;
+}
+
+.form-label {
+	width: 110px;
+	text-align: left; /* 左詰めにする */
+	margin-right: 0.5em;
+	white-space: nowrap; /* テキストを折り返さない */
+}
+
+.form-input {
+	flex-grow: 1;
+	max-width: 200px;
+}
+
+.upload-button {
+	display: block; /* ブロック要素として表示し、改行させる */
+	margin-top: 50px; /* 上のボタンとの間隔を調整 */
+}

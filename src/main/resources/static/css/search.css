@@ -1,0 +1,248 @@
+@charset "UTF-8";
+/* search.html固有スタイル */
+
+/* 検索結果の表示欄の設定 */
+
+.scrollabel-table-container {
+	max-height: 450px; /* 適切な高さに設定 */
+	overflow-y: auto;
+	margin-top: 1em; /* 必要に応じてマージンを追加 */
+	border: 1px solid #ccc; /* 必要に応じてボーダーを追加 */
+}
+
+.scrollabel-table-container table {
+	width: 100%; /* テーブルの幅をコンテナに合わせる */
+	border-collapse: collapse; /* セルの境界線を重ねて表示 */
+}
+
+.scrollabel-table-container th,
+.scrollabel-table-container td {
+	border-right: 1px solid #ddd; /* 右側の境界線 */
+	padding: 8px; /* セルの内側の余白 */
+	text-align: left; /* テキスト左寄せ */
+}
+
+.scrollabel-table-container th {
+	background-color: #f2f2f2; /* ヘッダーの背景色を明示的に設定 */
+	position: sticky; /* ヘッダーを固定 */
+	top: 0; /* スクロール可能な領域の最上部に固定 */
+	z-index: 1; /* 必要に応じて重ね順を調整 */
+}
+
+.scrollabel-table-container tr {
+	border-bottom: 1px solid #ddd; /* 各行の下側の境界線 */
+}
+
+/* 最初の列（選択）の左側の境界線を追加 */
+.scrollabel-table-container th:first-child,
+.scrollabel-table-container td:first-child {
+	border-left: 1px solid #ddd;
+	width: 30px; /* 固定したい幅を指定 */
+	min-width: 30px; /* 最小値固定 */
+	max-width: 30px; /* 最大値固定 */
+	text-align: center;
+	white-space: nowrap; /* 折り返さない */
+}
+
+/* 最後の列（出演者）の右側の境界線を削除 */
+.scrollabel-table-container th:last-child,
+.scrollabel-table-container td:last-child {
+	border-right: none;
+}
+
+/* Noの列の幅を調整 */
+.scrollabel-table-container th:nth-child(2),
+.scrollabel-table-container td:nth-child(2) {
+	width: 30px; /* 幅の設定 */
+	min-width: 30px; /* 最小の幅も設定 */
+	white-space: nowrap; /* 折り返さないように設定 */
+	text-align: center;
+}
+
+/* 公開年の列の幅を調整 */
+.scrollabel-table-container th:nth-child(3),
+.scrollabel-table-container td:nth-child(3) {
+	width: 30px; /* 幅の設定 */
+	min-width: 30px; /* 最小の幅も設定 */
+	white-space: nowrap; /* 折り返さないように設定 */
+	text-align: center;
+}
+
+/* 邦題の列の幅を調整 */
+.scrollabel-table-container th:nth-child(4),
+.scrollabel-table-container td:nth-child(4) {
+	width: 50px; /* 幅の設定 */
+	min-width: 50px; /* 最小の幅も設定 */
+	text-align: center;
+}
+
+/* 原題の列の幅を調整 */
+.scrollabel-table-container th:nth-child(5),
+.scrollabel-table-container td:nth-child(5) {
+	width: 50px; /* 幅の設定 */
+	min-width: 50px; /* 最小の幅も設定 */
+	text-align: center;
+}
+
+/* ヘッダーの下側の境界線を少し太くする */
+.scrollabel-table-container th {
+	border-bottom: 2px solid #ccc;
+}
+
+/* 検索ボタンのスタイル設定 */
+
+.search-button {
+	background-color: lightgray; /* ボタンの背景色 */
+	color: black; /* ボタンの文字色 */
+	margin-top: 10px;
+	margin-right: 50px;
+	padding: 10px 20px; /* 共通の余白で大きさを揃える */
+	font-size: 16px; /* 共通の文字サイズ */
+	border: 1px solid #ccc; /* 共通の枠線 */
+	border-radius: 5px; /*共通の角の丸み*/
+	cursor: pointer; /* 共通のマウスオーバー時のカーソル */
+}
+.search-button:hover {
+	opacity: 0.8; /* ホバー時に少し透明にするなどの効果 */
+}
+
+.clear-button {
+		margin-top: 10px;
+		margin-left: 50px;
+}
+
+.button-group {
+	display: flex; /* FlexBoxレイアウトを有効にする */
+	align-items: center; /* 垂直方向中央揃え */
+	margin-top: 20px; /* ボタン上部の余白 */
+}
+
+.button-group button {
+	margin-right: 20px; /* ボタン間のスペース */
+	padding: 10px 20px;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+/* 最後のボタンの右マージンを削除（見た目を整えるため） */
+.button-group button:last-child {
+	margin-right: 0;
+}
+
+/* 必要に応じてボタンの個別のスタイル */
+
+/* 以下レスポンシブルデザイン */
+
+/* スマートフォン向けのスタイル（画面幅が 767px 以下の場合に使用） */
+@media screen and (max-width: 767px) {
+	body {
+		font-size: 14px; /* 全体的なフォントサイズを小さく設定 */
+	}
+	
+	h1 {
+		font-size: 1.5em; /* 見出しのフォントサイズを調整 */
+	}
+	
+	.form-input {
+		font-size: 1.2em; /* 文字サイズを大きくする（1．2倍）*/
+		padding: 10px; /* 内側の余白を大きくする */
+		height: auto; /* 高さを自動設定 */
+		line-height: 1.5; /* 行の高さ */
+	}
+	
+	.scrollabel-table-container {
+		max-height: 200px; /* スマートフォンで高さを調整 */
+		margin-top: 0.5em;
+	}
+	
+	.scrollabel-table-container th,
+	.scrollabel-table-container td {
+		padding: 6px; /* スマートフォンでセルの余白を小さく設定 */
+		font-size: 0.9em; /* スマートドンで文字サイズを小さく設定 */
+	}
+	
+	/* スマートフォンではテーブルを横スクロール可能にする */
+	.scrollabel-table-container table {
+		width: auto; /* コンテナに合わせていた幅を自動にする */
+		min-width: 100%; /* 最低限の幅を確保 */
+	}
+	
+	/* 選択列の幅をさらに小さく */
+	.scrollabel-table-container th:first-child,
+	.scrollabel-table-container td:first-child {
+		width: 25px;
+		min-width: 25px;
+		max-width: 25px;
+		padding: 4px;
+	}
+	
+	/* ボタンのグループ */
+	
+	button {
+		font-size: 12px; /* スマートフォンで文字サイズを小さく */
+		padding: 8px 15px; /* スマートフォンで余白を小さく */
+		margin-top: 8px; /* 必要に応じてマージンを調整 */
+		margin-right: 8px; /* 必要に応じてマージンを調整 */
+	}
+	
+	.button-group {
+		display: flex; /* FlexBox レイアウトを有効にする */
+		flex-direction: row; /* ボタンを横並びにする */
+		align-items: center; /* 垂直方向中央揃え */
+		overflow-x: auto; /* ボタンが画面幅に収まらない場合は横スクロールを許可 */
+		white-space: nowrap; /* ボタンが改行しないように設定 */
+	}
+	
+	.button-group button {
+		font-size: 12px; /* ボタンの文字サイズを調整 */
+		margin-right: 10px; /* ボタン間の横マージンを調整 */
+		margin-bottom: 0; /* 縦方向のマージンを削除 */
+		border: 1px solid #ccc; /* 共通の枠線を再指定 */
+	}
+	
+	.button-group button:last-child {
+		font-size: 12px;
+		border-right: 0;
+		border: 1px solid #ccc; /* 共通の枠線を再指定 */
+	}
+	
+	.search-button {
+		font-size: 12px;
+		font-weight: normal;
+		margin-top: 5px;
+		padding: 8px 15px;
+	}
+	
+	.clear-button {
+		margin-top: 5px;
+		margin-left: 50px;
+	}
+}
+
+/* タブレット向けのスタイル（画面幅が 768px 以上 991px 以下の場合に適用） */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+	body {
+		font-size: 16px;
+	}
+	
+	h1 {
+		font-size: 2em;
+	}
+	
+	.scrollabel-table-container {
+		max-height: 400px;
+		margin-top: 0.8em;
+	}
+	
+	.scrollabel-table-container th,
+	.scrollabel-table-container td {
+		padding: 7px;
+		font-size: 0.95em;
+	}
+	/*
+	.button-group {
+		タブレット端末では横並びを維持
+	}*/
+}

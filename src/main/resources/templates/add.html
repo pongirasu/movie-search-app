@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>映画追加</title>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/add.css}">
+	<script src="/js/addform.js" defer></script>
+</head>
+
+<body>
+	<div class="container">
+		<h1>映画追加</h1>
+		<div th:if="${errorMessage}" class="error-message">
+			<p th:text="${errorMessage}"></p>
+		</div>
+		<div th:if="${successMessage}" class="success-message">
+			<p th:text="${successMessage}"></p>
+		</div>
+		<div th:if="${warningMessage}" class="warningMessage">
+			<p th:text="${warningMessage}"></p>
+			<button type="button" onclick="confirmSave()">はい</button>
+			<button type="button" onclick="history.back()">いいえ</button>
+		</div>
+		<form id="addForm" th:action="@{/movies/add}" th:object="${movie}" method="post">
+			<input type="hidden" id="forceSave" name="forceSave" value="false">
+			
+			<div class="form-item">
+				<label for="no">No</label>
+				<input type="text" id="no" th:field="*{discNo}" required="required" class="form-input">
+				<div th:if="${#fields.hasErrors('discNo')}" class="error-message">
+					<p th:errors="*{discNo}"></p>
+				</div>
+			</div>
+			
+			<div class="form-item">
+				<label for="year">公開年</label>
+				<input type="text" id="year" th:field="*{year}" class="form-input">
+				<div th:if="${#fields.hasErrors('year')}" class="error-message">
+					<p th:errors="*{year}"></p>
+				</div>
+			</div>
+			
+			<div class="form-item">
+				<label for="title">映画タイトル（邦題）</label>
+				<input type="text" id="title" th:field="*{title}" class="form-input">
+				<div th:if="${#fields.hasErrors('title')}" class="error-message">
+					<p th:errors="*{title}"></p>
+				</div>
+			</div>
+			
+			<div class="form-item">
+				<label for="originalTitle">映画タイトル（原題）</label>
+				<input type="text" id="originalTitle" th:field="*{originalTitle}" class="form-input">
+				<div th:if="${#fields.hasErrors('originalTitle')}" class="error-message">
+					<p th:errors="*{originalTitle}"></p>
+				</div>
+			</div>
+			
+			<div class="form-item">
+				<label class="form-label">出演者</label>
+				<div id="actors-container">
+					<div th:if="${initialActors != null && !initialActors.isEmpty()}">
+						<div th:each="actor : ${initialActors}" class="actor-input-group">
+							<input type="text" class="form-input" name="actors[]" th:value="${actor}" placeholder="出演者名">
+						</div>
+					</div>
+					<div th:if="${initialActors == null || initialActors.isEmpty()}">
+						<div class="actor-input-group">
+							<input type="text" class="form-input" name="actors[]" placeholder="出演者名">
+						</div>
+					</div>
+				</div>
+				<button type="button" id="add-actor-button">出演者を追加</button>
+			</div>
+			
+			<button type="submit">登録</button>
+			<button type="button" th:onclick="|location.href='@{/movies/search}'|">トップに戻る</button>
+		</form>
+	</div>
+</body>
+</html>
+
+<!-- このHTMLの説明
+	<divの説明>
+			<div th:if="${errorMessage}" class="error-message"> と <div th:if="${successMessage}" class="success-message">: 
+			コントローラーから Model に追加された場合に、それぞれのエラーメッセージまたは成功メッセージを表示する。
+	＜formの説明＞
+			@{・・・} : thymeleaf のURL式
+			th:action="@{/movies/add}" : フォームの送信先 URL を /movies/add に設定。
+			th:object="${movie}" : フォームのバインディング対象となるオブジェクトとして、コントローラーから渡された、movie オブジェクトを指定。
+			これにより、フォームの各入力フィールドと movie オブジェクトのフィールドが関連付けられる。
+			
+	<タイトル入力フィールドの説明>
+			<input type="text" id="title" th:field="*{title}" required="required"/>: テキスト入力フィールド。
+			id="title" : ラベルと関連付けるためのID属性。
+			th:field="*{title}" : オブジェクトの title フィールドをバインドする。これにより、フォームの値が movie.title にセットされる。
+			required="required" : このフィールドが必須であることを指定する。
+			
+	<出演者入力フィールドの説明>
+			<div class="form-group"> と <label for="actors">出演者 (カンマ区切り):</label>: 出演者入力欄のラベル。
+			id="actors" : ラベルと関連付けるためのID属性。
+			name="actors" : この入力フィールドの名前を actors に設定。
+			コントローラー（MovieController の addMovie メソッド）では、@RequestParam を使ってこの名前で値を受け取る。
+			今回は、一旦カンマ区切りの文字列として受け取るように実装。
+			
+	<ボタン>
+			th:onclick="|location.href='@{/movies/search}'|" : |・・・| これは、thymeleaf の Text inlining シンタックス。
+			この中で変数や式を直接埋め込むことが出来る。
+-->

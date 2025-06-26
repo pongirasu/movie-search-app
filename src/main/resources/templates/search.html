@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>映画検索</title>
+	<link rel="stylesheet" th:href="@{/css/search.css}">
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+	<h1>映画検索</h1>
+
+	<form th:action="@{/movies/search}" method="get">
+		<div class="form-item">
+			<span class="form-label">映画タイトル</span>
+			<input type="text" name="titleKeyword" class="form-input" th:value="${titleKeyword}">
+		</div>
+		<div class="form-item">
+			<span class="form-label">出演者１</span>
+			<input type="text" name="actorKeyword1" class="form-input" th:value="${actorKeyword1}">
+		</div>
+		<div class="form-item">
+			<span class="form-label">出演者２</span>
+			<input type="text" name="actorKeyword2" class="form-input" th:value="${actorKeyword2}">
+		</div>
+		<input type="submit" class="search-button" value="検索">
+	</form>
+
+	<div th:if="${successMassage}" class="success-message">
+		<p th:text="${successMessage}"></p>
+	</div>
+	<div th:if="${errorMessage}" class="error-message">
+		<p th:text="${errorMessage}"></p>
+	</div>
+	
+	<div class="button-group">
+		<button type="button" th:onclick="|location.href='@{/movies/add}'|">追加</button>
+		<button type="button" th:onclick="|location.href='@{/movies/import}'|">JSON ファイルインポート</button>
+	</div>
+
+	<div th:if="${results != null and !results.isEmpty()}">
+		<h2>検索結果（<span th:text="${results.size()}"></span>件表示中）</h2>
+		<form th:action="@{/movies/actions}" method="post">
+			<div class="scrollabel-table-container">
+				<table>
+					<thead>
+						<tr>
+							<th>選択</th>
+							<th>No</th>
+							<th>公開年</th>
+							<th>映画タイトル（邦題）</th>
+							<th>映画タイトル（原題）</th>
+							<th>出演者</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="result : ${results}">
+							<td>
+								<input type="checkbox" name="selectedMovies" th:value="${result.movieId}">
+							</td>
+							<td th:text="${result.discNo}"></td>
+							<td th:text="${result.year}"></td>
+							<td th:text="${result.title}"></td>
+							<td th:text="${result.originalTitle ?: '-'}"></td>
+							<td>
+								<span th:text="${result.actors}"></span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="button-group">
+				<button type="submit" th:formaction="@{/movies/edit}" th:if="${!results.isEmpty()}">編集</button>
+				<button type="submit" th:formaction="@{/movies/delete}" th:if="${!results.isEmpty()}" id="delete-button" 
+				onclick="return confirm('選択した映画を削除しますか？')">削除</button>
+				
+			</div>
+		</form>
+	</div>
+	<div th:if="${results == null or results.isEmpty()}">
+		<p>検索結果はありません。</p>
+	</div>
+	
+	</body>
+</html>
+
+<!-- このHTMLの説明
+	<html xmlns:th="http://www.thymeleaf.org">: 
+	　	HTML 要素のルートで、xmlns:th="http://www.thymeleaf.org" は、Thymeleaf テンプレートエンジンを使用するための名前空間宣言
+		これにより、th: 属性を HTML タグ内で使用できるようになる。
+	
+	<form th:action="@{/movies/search}" method="get">: 
+		映画検索のためのフォームを定義。th:action="@{/movies/search}": フォームの送信先 URL を /movies/search に設定し、
+	　	@{...} は Thymeleaf の URL 式で、コントローラーの特定のマッピングに対応する URL を生成。
+		
+	<div th:if="${results != null and !results.isEmpty()}">: 
+		検索結果が存在する場合にのみ表示される領域。th:if="${results != null and !results.isEmpty()}": Thymeleaf の if 属性。
+		${results} というモデル属性（コントローラーから渡される検索結果のリスト）が null でなく、
+		かつ空でない場合に、この div 要素とその内容がレンダリングされる。
+	
+	<form th:action="@{/movies/edit}" method="get">: 
+		検索結果を編集または削除するためのフォーム。th:action="@{/movies/edit}": フォームの基本的な送信先は /movies/edit に設定されているが、
+		ボタンごとに th:formaction で異なるアクションを指定している。
+	
+	method="get": HTTP の GET メソッドを使用してフォームデータを送信することを指定。GET メソッドは、検索などの副作用のない操作に適している。
+	
+	出演者：<input type="text" name="actorKeyword"><br>: 
+		出演者を入力するためのテキスト入力フィールド。
+		name="actorKeyword" は、サーバー側でこの入力フィールドの値を受け取る際のパラメータ名になる。
+	
+	<input type="submit" value="検索">: 
+		フォームを送信するためのボタン。value="検索" はボタンに表示されるテキストを設定
+	
+	th:if="${results != null and !results.isEmpty()}": 
+		Thymeleaf の if 属性で、${results} というモデル属性（コントローラーから渡される検索結果のリスト）が null でなく、かつ空でない場合に、
+		この div 要素とその内容がレンダリングされる。
+	
+	th:action="@{/movies/edit}": 
+		フォームの基本的な送信先は /movies/edit に設定されているが、ボタンごとに th:formaction で異なるアクションを指定している。
+	
+	method="get": 
+		編集と削除のどちらも GET メソッドを使用しています。これは、選択された映画の ID を URL パラメータとして送信するのに適している。
+	
+	<tr th:each="result : ${results}">: 
+		Thymeleaf の each 属性で、コントローラーから渡された ${results} リストの各要素（result）に対して、
+		この <tr> 要素を繰り返しレンダリングしている。
+		
+	<td><input type="checkbox" name="selectedMovies" th:value="${result.movieId}"></td>: 
+		映画を選択するためのチェックボックス。
+	
+	name="selectedMovies": 
+		サーバー側で選択された映画の ID を配列として受け取るためのパラメータ名。
+	
+	th:value="${result.movieId}": 
+		チェックボックスの値を、現在の映画オブジェクト (result) の movieId に設定。
+	
+	td th:text="${result.movieId}"></td>: 
+		映画の ID を表示するセルです。th:text="${result.movieId}" は、result オブジェクトの movieId フィールドの値をテキストとして表示。
+	
+	<td th:text="${result.title}"></td>:
+		 映画のタイトルを表示するセル。th:text="${result.title}" は、result オブジェクトの title フィールドの値をテキストとして表示。
+	
+	<td><th:block th:each="actor, iterStat : ${result.actors}"> ... </th:block></td>: 
+		映画の出演者を表示するセル。
+	
+	<th:block th:each="actor, iterStat : ${result.actors}">: 
+		Thymeleaf の each 属性で、現在の映画オブジェクト (result) の actors リストの各要素（actor）に対して、
+		内部の要素を繰り返しレンダリングする。
+		iterStat はループの状態（インデックス、最初かどうか、最後かどうかなど）を提供するオブジェクト。
+		
+	<span th:text="${actor.actorName}"></span>: 
+		出演者の名前を表示する span 要素。
+		
+	<span th:if="${!iterStat.last}">,</span>: 
+		現在の出演者がリストの最後でない場合にのみ、コンマを表示する span 要素。
+	
+	<button type="submit" th:formaction="@{/movies/edit}" th:if="${!results.isEmpty()}">編集</button>: 
+		編集ボタン。
+	
+	th:formaction="@{/movies/edit}": 
+		フォームの送信先を /movies/edit に設定。
+		
+	th:if="${!results.isEmpty()}": 
+		検索結果が存在する場合のみ表示。
+	
+	<button type="submit" th:formaction="@{/movies/delete}"
+	th:if="${!results.isEmpty()}" onclick="return confirm('選択した映画を削除しますか？')">削除</button>: 
+		削除ボタン
+		
+	th:formaction="@{/movies/delete}": 
+		フォームの送信先を /movies/delete に設定。
+		
+	th:if="${!results.isEmpty()}": 
+		検索結果が存在する場合のみ表示。
+		
+	onclick="return confirm('選択した映画を削除しますか？')":
+		 JavaScript の confirm() 関数を呼び出し、ユーザーに削除の確認を促す。はい」が選択された場合のみフォームが送信される。
+	
+	<div th:if="${results == null or results.isEmpty()}">: 
+		検索結果が存在しない場合に表示される領域。
+		
+	th:if="${results == null or results.isEmpty()}": 
+		Thymeleaf の if 属性で、${results} が null であるか、または空である場合に、この div 要素とその内容がレンダリング。
+		
+	<p>検索結果はありません。</p>: 
+		「検索結果はありません。」というメッセージを表示。
+	
+	<div><button th:onclick="|location.href='@{/movies/add}'|">追加</button></div>: 
+		新しい映画を追加するためのボタン。
+	
+	th:onclick="|location.href='@{/movies/add}'|": 
+		Thymeleaf の onclick 属性で、ボタンがクリックされたときに JavaScript の location.href を使用して /movies/add の URL に遷移させる。
+		|...| は Thymeleaf のテキストインライン構文で、URL 式の結果を直接埋め込むことができる。
+-->
