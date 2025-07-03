@@ -17,6 +17,11 @@ build/
 *.mv.db
 *.trace.db
 
+# Eclipse-specific files
+.classpath
+.project
+.settings/
+
 # Log files
 *.log
 logs/
