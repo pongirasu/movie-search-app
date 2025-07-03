@@ -1,6 +1,6 @@
 # 変更前: FROM openjdk:8-jdk-slim
 # 変更後: MavenがプリインストールされたOpen JDK 8のイメージを使用
-FROM maven:3-openjdk-8 as build
+FROM maven:3-openjdk-11 as build
 
 WORKDIR /app
 
@@ -21,7 +21,7 @@ RUN jar -tf target/movie-search-app-0.0.1-SNAPSHOT.jar | grep postgresql
 
 # --- ここからランタイムイメージのフェーズ ---
 # アプリケーションを実行するための軽量なJREイメージを使用
-FROM openjdk:8-jre-slim
+FROM openjdk:11-jre-slim
 
 WORKDIR /app
 
