@@ -1,6 +1,6 @@
 # 変更前: FROM openjdk:8-jdk-slim
 # 変更後: MavenがプリインストールされたOpen JDK 8のイメージを使用
-FROM maven:3.9-openjdk-8 as build
+FROM maven:3-openjdk-8 as build
 
 WORKDIR /app
 
