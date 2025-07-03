@@ -1,18 +1,27 @@
-# ベースイメージとしてJava Development Kit 8 (JDK 8) の軽量版を使用します。
-FROM openjdk:8-jdk-slim
+# 変更前: FROM openjdk:8-jdk-slim
+# 変更後: MavenがプリインストールされたOpen JDK 8のイメージを使用
+FROM maven:3.9-openjdk-8 as build
 
-# アプリケーションのJARファイルを格納する作業ディレクトリを作成します。
 WORKDIR /app
 
-# Mavenのビルドに必要なファイルをコピーし、アプリケーションをビルドします。
-# テストをスキップする設定です。
+# Mavenキャッシュを最適化するために、まずpom.xmlだけをコピーして依存関係をダウンロードします
 COPY pom.xml .
+RUN mvn dependency:go-offline -B
+
+# ソースコードをコピーします
 COPY src ./src
-RUN mvn -f pom.xml clean package -Dmaven.test.skip=true
+
+# アプリケーションをビルドします
+RUN mvn clean package -Dmaven.test.skip=true
+
+# --- ここからランタイムイメージのフェーズ ---
+# アプリケーションを実行するための軽量なJREイメージを使用
+FROM openjdk:8-jre-slim
+
+WORKDIR /app
 
 # ビルドされたJARファイルを、コンテナ内で「app.jar」という名前でコピーします。
-COPY target/*.jar app.jar
+COPY --from=build /app/target/*.jar app.jar
 
-# コンテナが起動したときに実行されるコマンドを指定します。
-# これにより、Javaアプリケーションが起動します。
+# アプリケーションの起動コマンド
 ENTRYPOINT ["java", "-jar", "app.jar"]
