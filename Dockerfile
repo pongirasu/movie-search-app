@@ -21,7 +21,7 @@ FROM openjdk:8-jre-slim
 WORKDIR /app
 
 # ビルドされたJARファイルを、コンテナ内で「app.jar」という名前でコピーします。
-COPY --from=build /app/target/*.war app.jar
+COPY --from=build /app/target/movie-search-app-0.0.1-SNAPSHOT.jar app.jar
 
 # アプリケーションの起動コマンド
 ENTRYPOINT ["java", "-jar", "app.jar"]
