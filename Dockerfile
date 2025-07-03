@@ -14,6 +14,11 @@ COPY src ./src
 # アプリケーションをビルドします
 RUN mvn clean package -Dmaven.test.skip=true
 
+# ★★★ デバッグ用に追加 ★★★
+RUN ls -l target/
+RUN jar -tf target/movie-search-app-0.0.1-SNAPSHOT.jar | grep postgresql
+# ★★★ ここまで ★★★
+
 # --- ここからランタイムイメージのフェーズ ---
 # アプリケーションを実行するための軽量なJREイメージを使用
 FROM openjdk:8-jre-slim
