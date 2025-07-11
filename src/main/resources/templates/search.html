@@ -4,13 +4,13 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>映画検索</title>
-	<link rel="stylesheet" th:href="@{/css/search.css}">
+	<title>映画情報検索</title>
 	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/search.css}">
 </head>
 
 <body>
-	<h1>映画検索</h1>
+	<h1>映画情報検索</h1>
 
 	<form th:action="@{/movies/search}" method="get">
 		<div class="form-item">
@@ -25,7 +25,7 @@
 			<span class="form-label">出演者２</span>
 			<input type="text" name="actorKeyword2" class="form-input" th:value="${actorKeyword2}">
 		</div>
-		<input type="submit" class="search-button" value="検索">
+		<input type="submit" class="search-button" value="映画を検索する">
 	</form>
 
 	<div th:if="${successMassage}" class="success-message">
@@ -36,7 +36,7 @@
 	</div>
 	
 	<div class="button-group">
-		<button type="button" th:onclick="|location.href='@{/movies/add}'|">追加</button>
+		<button type="button" th:onclick="|location.href='@{/movies/add}'|">新しい映画を追加</button>
 		<button type="button" th:onclick="|location.href='@{/movies/import}'|">JSON ファイルインポート</button>
 	</div>
 
@@ -72,9 +72,9 @@
 				</table>
 			</div>
 			<div class="button-group">
-				<button type="submit" th:formaction="@{/movies/edit}" th:if="${!results.isEmpty()}">編集</button>
+				<button type="submit" th:formaction="@{/movies/edit}" th:if="${!results.isEmpty()}">選択した映画を編集</button>
 				<button type="submit" th:formaction="@{/movies/delete}" th:if="${!results.isEmpty()}" id="delete-button" 
-				onclick="return confirm('選択した映画を削除しますか？')">削除</button>
+				onclick="return confirm('選択した映画を削除しますか？')">選択した映画を削除</button>
 				
 			</div>
 		</form>

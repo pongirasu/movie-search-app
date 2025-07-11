@@ -135,6 +135,54 @@
 
 /* 以下レスポンシブルデザイン */
 
+/* フォームとボタンのデスクトップ向け横並び調整 */
+@media screen and (min-width: 768px) {
+	form {
+		display: flex; /* フォーム全体をFlexコンテナにする */
+		flex-wrap: wrap; /* 要素が収まらない場合に折り返す */
+		align-items: center; /* フォームの要素を中央揃えにする */
+	}
+	
+	form .form-item {
+		margin-right: 20px; /* 各フォームアイテム間の右マージン */
+		margin-bottom: 1em; /* 必要に応じて下マージン */
+	}
+	
+	.search-button {
+		margin-top: -7px; /* 検索ボタンのトップ位置を調整 */
+		margin-left: 0; /* 必要であれば左マージンもリセット */
+		margin-right: 20px; /* 他のフォームアイテムとの間隔 */
+		margin-bottom: 0.5em; /* フォームアイテムと下マージンを合わせる */
+	}
+	
+	.clear-button {
+		margin-top: 0;
+		margin-left: 0;
+	}
+	
+	.button-group {
+		/* デスクトップでは既存のFlex設定を維持 */
+		margin-top: 20px; /* 検索結果とのマージン */
+		justify-content: flex-start; /* 左寄せにする */
+	}
+	
+	/* 邦題の列の幅を調整 */
+	.scrollabel-table-container th:nth-child(4),
+	.scrollabel-table-container td:nth-child(4) {
+		width: 50px; /* 幅を広げる */
+		min-width: 50px; /* 最小の幅を設定 */
+		text-align: center; /* テキストは左寄せに戻す */
+	}
+	
+	/* 原題の列の幅を調整 */
+	.scrollabel-table-container th:nth-child(5),
+	.scrollabel-table-container td:nth-child(5) {
+		width: 50px;
+		min-width: 50px;
+		text-align: center;
+	}
+}
+
 /* スマートフォン向けのスタイル（画面幅が 767px 以下の場合に使用） */
 @media screen and (max-width: 767px) {
 	body {

@@ -21,26 +21,136 @@ button:hover {
 
 /* 映画タイトルと出演者の文字列とテキストボックスの設定 */
 
+/* フォーム項目全般のスタイル */
 .form-item {
 	display: flex;
-	flex-direction: column;
-	align-items: baseline;
-	margin-bottom: 0.5em;
+	flex-direction: column; /* デフォルトは縦並び */
+	align-items: flex-start;
+	margin-bottom: 1.5em;
 }
 
 .form-label {
-	width: 110px;
-	text-align: left; /* 左詰めにする */
-	margin-right: 0.5em;
-	white-space: nowrap; /* テキストを折り返さない */
+	font-weight: bold;
+	font-size: 1.1em;
 }
 
+/* フォーム項目のラベルのスタイル */
+.form-item > label {
+	text-align: left; /* 左詰めにする */
+	white-space: nowrap; /* テキストを折り返さない */
+	font-size: 1.1em; /* ラベルのフォントサイズ */
+	font-weight: bold; /* ラベルを太字にして目立たせる */
+	margin-bottom: 0.5em; /* ラベルと入力欄の間の縦方向の余白を確保 */
+}
+
+/* フォーム入力フィールドのスタイル */
 .form-input {
 	flex-grow: 1;
-	max-width: 200px;
+	max-width: 300px;
+	padding: 8px 10px;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+/* 出演者コンテナ（出演者テキストボックス群） */
+#actors-container{
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-bottom: 1em;
+	width: 100%;
+}
+
+/* 各出演者入力グループ */
+.actors-input-group {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.actors-input-group .form-input {
+	flex-grow: 1;
+	max-width: 300px; /* 出演者入力ボックスの幅も調整 */
+}
+
+/* 出演者を追加ボタンの調整 */
+#add-actor-button {
+	padding: 10px 15px;
+	font-size: 14px;
+	margin-top: -7px; /* 検索ボタンと同様に上方向にずらす */
+	margin-left: 0;
+	background-color: lightgray;
+	color: black;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+#add-actor-button:hover {
+	opacity: 0.8;
+}
+
+/* 登録、トップに戻るボタンのグループ */
+form > button {
+	margin-top: 20px;
+	margin-right: 20px;
+}
+
+form > button:last-child {
+	margin-right: 0;
 }
 
 .upload-button {
 	display: block; /* ブロック要素として表示し、改行させる */
 	margin-top: 50px; /* 上のボタンとの間隔を調整 */
+}
+
+/* デスクトップ表示用（768px以上） */
+@media screen and (min-width: 768px) {
+	.form-item {
+		flex-direction: row; /* デスクトップでは横並びにする */
+		align-items: center; /* ラベルと入力ボックスの最初の行の上端が揃う */
+	}
+	
+	.form-item > label {
+		margin-right: 1.5em; /* ラベルと入力欄の間の余白を調整 */
+		width: 150px; /* デスクトップでのラベル幅 */
+		text-align: left;
+		margin-bottom: 0;
+	}
+	
+	.form-input {
+		max-width: 400px; /* デスクトップでの入力欄の最大幅を調整 */
+		padding: 10px 12px; /* 入力欄のパディングを増やして高さを出す */
+		font-size: 16px; /* フォントサイズも調整 */
+	}
+	
+	input[name="discNo"] {
+		max-width: 80px; /* デスクトップで「No」の幅を制限 */
+	}
+	input[name="year"] {
+		max-width: 90px; /*デスクトップで「公開年」の幅を制限*/
+	}
+	
+	/* 出演者関連のデスクトップ表示調整 */
+	#actors-container {
+		flex-grow: 1;
+		max-width: 300px;
+		margin-left: 0;
+		transform: translateY(8px);
+	}
+	
+	/* 各出演者入力グループの入力フィールドの幅 */
+	.actors-input-group .form-input {
+		max-width: 250px;
+	}
+	
+	/* 出演者追加ボタンの配置 */
+	#add-actor-button {
+		margin-top: 0px;
+		margin-left: 10px;
+		margin-right: 0;
+		align-self: center;
+	}
 }
