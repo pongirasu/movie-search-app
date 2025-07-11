@@ -71,16 +71,16 @@
 /* 邦題の列の幅を調整 */
 .scrollabel-table-container th:nth-child(4),
 .scrollabel-table-container td:nth-child(4) {
-	width: 100px; /* 幅の設定 */
-	min-width: 100px; /* 最小の幅も設定 */
+	width: 150px; /* 幅の設定 */
+	min-width: 150px; /* 最小の幅も設定 */
 	text-align: center;
 }
 
 /* 原題の列の幅を調整 */
 .scrollabel-table-container th:nth-child(5),
 .scrollabel-table-container td:nth-child(5) {
-	width: 100px; /* 幅の設定 */
-	min-width: 100px; /* 最小の幅も設定 */
+	width: 150px; /* 幅の設定 */
+	min-width: 150px; /* 最小の幅も設定 */
 	text-align: center;
 }
 
@@ -129,6 +129,24 @@
 /* 最後のボタンの右マージンを削除（見た目を整えるため） */
 .button-group button:last-child {
 	margin-right: 0;
+}
+
+/* 編集・削除ボタンのコンテナ */
+.edit-delete-buttons {
+    display: flex; /* Flexboxを使ってボタンを横並びにする */
+    gap: 10px; /* ボタン間の間隔 */
+    margin-top: 15px; /* テーブルからの上部マージン */
+    justify-content: flex-start; /* ボタンを左寄せにする */
+    flex-wrap: wrap; /* 画面幅が狭い場合にボタンを折り返す */
+    padding-bottom: 20px; /* ページ下部との余白 */
+}
+
+/* 個々のボタン（既存のスタイルがあれば調整） */
+.edit-delete-buttons button {
+    /* 既存のボタンのスタイルを維持または調整 */
+    padding: 8px 15px;
+    font-size: 14px;
+    /* その他、既存のボタンに適用されているスタイルがあればここに追加 */
 }
 
 /* 必要に応じてボタンの個別のスタイル */
@@ -267,6 +285,11 @@
 		margin-top: 5px;
 		margin-left: 50px;
 	}
+	
+	.edit-delete-buttons button {
+        width: auto; /* ボタンの幅はコンテンツに合わせる */
+        max-width: 100%; /* 親要素からはみ出さないように最大幅を設定 */
+    }
 }
 
 /* タブレット向けのスタイル（画面幅が 768px 以上 991px 以下の場合に適用） */

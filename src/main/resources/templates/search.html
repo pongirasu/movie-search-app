@@ -71,11 +71,10 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="button-group">
+			<div class="edit-delete-button-group">
 				<button type="submit" th:formaction="@{/movies/edit}" th:if="${!results.isEmpty()}">選択した映画を編集</button>
 				<button type="submit" th:formaction="@{/movies/delete}" th:if="${!results.isEmpty()}" id="delete-button" 
 				onclick="return confirm('選択した映画を削除しますか？')">選択した映画を削除</button>
-				
 			</div>
 		</form>
 	</div>
