@@ -131,14 +131,21 @@
 	margin-right: 0;
 }
 
+/* スクロールボックスと編集削除ボタンのフォームレイアウトを縦にする */
+.search-form {
+    display: flex;          /* Flexboxコンテナにする */
+    flex-direction: column; /* ✨ 子要素を縦方向に並べる ✨ */
+    align-items: flex-start; /* 子要素を左寄せにする */
+    gap: 20px;              /* テーブルとボタンの間の縦方向の隙間（オプション） */
+    width: 100%;            /* フォームが親要素の幅いっぱいに広がるようにする */
+}
+
 /* 編集・削除ボタンのコンテナ */
 .edit-delete-button-group {
     display: flex; /* Flexboxを使ってボタンを横並びにする */
     gap: 10px; /* ボタン間の間隔 */
-    margin-top: 15px; /* テーブルからの上部マージン */
     justify-content: flex-start; /* ボタンを左寄せにする */
     flex-wrap: wrap; /* 画面幅が狭い場合にボタンを折り返す */
-    padding-bottom: 20px; /* ページ下部との余白 */
 }
 
 /* 個々のボタン（既存のスタイルがあれば調整） */

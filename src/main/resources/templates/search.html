@@ -42,7 +42,7 @@
 
 	<div th:if="${results != null and !results.isEmpty()}">
 		<h2>検索結果（<span th:text="${results.size()}"></span>件表示中）</h2>
-		<form th:action="@{/movies/actions}" method="post">
+		<form th:action="@{/movies/actions}" method="post" class="search-form">
 			<div class="scrollabel-table-container">
 				<table>
 					<thead>
