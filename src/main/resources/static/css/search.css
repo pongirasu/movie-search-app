@@ -71,16 +71,16 @@
 /* 邦題の列の幅を調整 */
 .scrollabel-table-container th:nth-child(4),
 .scrollabel-table-container td:nth-child(4) {
-	width: 200px; /* 幅の設定 */
-	min-width: 200px; /* 最小の幅も設定 */
+	width: 100px; /* 幅の設定 */
+	min-width: 100px; /* 最小の幅も設定 */
 	text-align: center;
 }
 
 /* 原題の列の幅を調整 */
 .scrollabel-table-container th:nth-child(5),
 .scrollabel-table-container td:nth-child(5) {
-	width: 200px; /* 幅の設定 */
-	min-width: 200px; /* 最小の幅も設定 */
+	width: 100px; /* 幅の設定 */
+	min-width: 100px; /* 最小の幅も設定 */
 	text-align: center;
 }
 
@@ -196,16 +196,16 @@
 	/* 邦題の列の幅を調整 */
 	.scrollabel-table-container th:nth-child(4),
 	.scrollabel-table-container td:nth-child(4) {
-		width: 50px; /* 幅を広げる */
-		min-width: 50px; /* 最小の幅を設定 */
+		width: 100px; /* 幅を広げる */
+		min-width: 100px; /* 最小の幅を設定 */
 		text-align: center; /* テキストは左寄せに戻す */
 	}
 	
 	/* 原題の列の幅を調整 */
 	.scrollabel-table-container th:nth-child(5),
 	.scrollabel-table-container td:nth-child(5) {
-		width: 50px;
-		min-width: 50px;
+		width: 100px;
+		min-width: 100px;
 		text-align: center;
 	}
 }
