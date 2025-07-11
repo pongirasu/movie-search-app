@@ -10,7 +10,7 @@
 </head>
 
 <body>
-	<h1>映画編集</h1>
+	<h1>映画情報編集</h1>
 	<div th:if="${successMessage}" class="success-message">
 		<p th:text="${successMessage}"></p>
 	</div>
@@ -58,6 +58,10 @@
 		<div class="form-item">
 			<label class="form-label">出演者</label>
 			<div id="actors-container"></div>
+			
+		</div>
+		
+		<div class="add-actor-button">
 			<button type="button" id="add-actor-button">出演者を追加</button>
 		</div>
 

@@ -118,7 +118,7 @@
 }
 
 .button-group button {
-	margin-right: 20px; /* ボタン間のスペース */
+	margin-right: 60px; /* ボタン間のスペース */
 	padding: 10px 20px;
 	font-size: 16px;
 	border: 1px solid #ccc;
@@ -151,7 +151,7 @@
 /* 個々のボタン（既存のスタイルがあれば調整） */
 .edit-delete-button-group button {
     /* 既存のボタンのスタイルを維持または調整 */
-    padding: 8px 15px;
+    padding: 10px 20px;
     font-size: 16px;
     white-space: nowrap;
     flex-shrink: 0;

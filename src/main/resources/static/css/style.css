@@ -76,7 +76,7 @@ button:hover {
 
 /* 出演者を追加ボタンの調整 */
 #add-actor-button {
-	padding: 10px 15px;
+	padding: 10px 20px;
 	font-size: 14px;
 	margin-top: -7px; /* 検索ボタンと同様に上方向にずらす */
 	margin-left: 0;
@@ -148,8 +148,10 @@ form > button:last-child {
 	
 	/* 出演者追加ボタンの配置 */
 	#add-actor-button {
-		margin-top: 0px;
-		margin-left: 10px;
+		padding: 10px 20px;
+		font-size: 16px;
+		margin-top: 0;
+		margin-left: 0;
 		margin-right: 0;
 		align-self: center;
 	}
