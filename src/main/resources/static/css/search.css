@@ -132,7 +132,7 @@
 }
 
 /* 編集・削除ボタンのコンテナ */
-.edit-delete-buttons {
+.edit-delete-button-group {
     display: flex; /* Flexboxを使ってボタンを横並びにする */
     gap: 10px; /* ボタン間の間隔 */
     margin-top: 15px; /* テーブルからの上部マージン */
@@ -142,7 +142,7 @@
 }
 
 /* 個々のボタン（既存のスタイルがあれば調整） */
-.edit-delete-buttons button {
+.edit-delete-button-group button {
     /* 既存のボタンのスタイルを維持または調整 */
     padding: 8px 15px;
     font-size: 14px;
@@ -286,7 +286,7 @@
 		margin-left: 50px;
 	}
 	
-	.edit-delete-buttons button {
+	.edit-delete-button-group button {
         width: auto; /* ボタンの幅はコンテンツに合わせる */
         max-width: 100%; /* 親要素からはみ出さないように最大幅を設定 */
     }
