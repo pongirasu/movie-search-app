@@ -298,6 +298,8 @@
 	.edit-delete-button-group button {
         width: auto; /* ボタンの幅はコンテンツに合わせる */
         max-width: 100%; /* 親要素からはみ出さないように最大幅を設定 */
+        padding: 8px 15px;
+        font-size: 12px;
     }
 }
 

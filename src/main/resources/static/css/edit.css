@@ -101,6 +101,15 @@
 		padding: 8px 15px;
 		font-size: 12px;
 	}
+	
+	#add-actor-button {
+		padding: 8px 15px;
+		font-size: 12px;
+		margin-top: 0;
+		margin-left: 0;
+		margin-right: 0;
+		align-self: center;
+	}
 }
 
 /* タブレット向けのスタイル（画面幅が 768px 以上 991px 以下の場合に適用） */
